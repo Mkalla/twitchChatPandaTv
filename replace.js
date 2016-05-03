@@ -1,18 +1,33 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+    var streams = {
+        "3331": "eternalenvyy",
+        "3332": "arteezy",
+        "3333": "universedota",
+        "3334": "puppey",
+        "3335": "pieliedie"
+    };
+
+    var pandaId = document.location.pathname.substring(1);
+
+    //Return if no stream found
+    if(streams[pandaId] == null){
+        console.log("No twitch stream found");
+        return;
+    }
+
+    var twitchId = streams[pandaId];
+
     //Remove static elements
     var roomSidebarContainer = document.getElementById("room_sidebar_container");
     roomSidebarContainer.parentNode.removeChild(roomSidebarContainer);
-
 
     var numberOfElementsToProcess = 8;
     var elementIsProcessedArray = [];
 
     while (numberOfElementsToProcess--) elementIsProcessedArray.push(false);
 
-
     var imgURL = chrome.extension.getURL("biersderp.png");
-
     var elemParent = document.body;
 
     var observer = new MutationObserver(function(mutations) {
@@ -33,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 //Change styles
                 var chatBox = mutation.target.querySelector(".room-chat-box");
                 if (chatBox) {
-                    chatBox.innerHTML = "<iframe src='https://www.twitch.tv/arteezy/chat' width='100%' height='100%' />";
+                    chatBox.innerHTML = "<iframe src='https://www.twitch.tv/" + twitchId + "/chat' width='100%' height='100%' />";
                     elementIsProcessedArray[7] = true;
                 }
 
